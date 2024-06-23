@@ -1,3 +1,7 @@
 fastapi==0.111.0
+openai==1.35.3
+protobuf==3.19.6
+protobuf==3.20.3
 pydantic==2.7.4
 python-dotenv==1.0.1
+Requests==2.32.3
