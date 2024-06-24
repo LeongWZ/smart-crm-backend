@@ -1,8 +1,12 @@
 import os
 import google.generativeai as genai
+from dotenv import load_dotenv
+
 from models import Dialogue
 
-genai.configure(api_key=os.environ["GEMINI_API_KEY"])
+load_dotenv()
+
+genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
 
 # Create the model
 # See https://ai.google.dev/api/python/google/generativeai/GenerativeModel

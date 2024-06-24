@@ -42,6 +42,6 @@ def retrieve_lark_token_callback():
         if token is None or token.is_expired():
             token = obtain_lark_token()
         
-        return token.lark_token
+        return token.lark_token if token else ""
     
     return helper
