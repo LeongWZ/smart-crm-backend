@@ -2,14 +2,14 @@ from openai import OpenAI
 import os
 from dotenv import load_dotenv
 
-from models import Dialogue
+from models import Transcript
 
 load_dotenv()
 
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
-def generate(transcript: str, dialogues: list[Dialogue]):
-    dialogues_str = "\n".join(map(lambda dialogue: str(dialogue), dialogues))
+def generate(transcripts: list[Transcript]):
+    transcripts_str = "\n".join(map(lambda transcript: str(transcript), transcripts))
 
     completion = client.chat.completions.create(
         model="gpt-3.5-turbo-16k",
@@ -21,7 +21,7 @@ def generate(transcript: str, dialogues: list[Dialogue]):
             },
             {
                 "role": "user",
-                "content": f"Transcript: {transcript}\n{dialogues_str}"
+                "content": f"Transcript:\n{transcripts_str}"
             }
         ]
     )

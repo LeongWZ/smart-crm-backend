@@ -1,14 +1,15 @@
 from pydantic import BaseModel
 
 
-class Dialogue(BaseModel):
+class Transcript(BaseModel):
     speakerTag: int
+    startTime: str
+    endTime: str
     content: str
 
     def __str__(this):
-        return f"Speaker {this.speakerTag}:\n{this.content}"
+        return f"[{this.startTime} - {this.endTime}] Speaker {this.speakerTag}:\n{this.content}"
 
 class Prompt(BaseModel):
     email: str
-    transcript: str
-    dialogues: list[Dialogue]
+    transcripts: list[Transcript]

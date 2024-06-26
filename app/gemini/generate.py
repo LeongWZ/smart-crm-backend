@@ -2,7 +2,7 @@ import os
 import google.generativeai as genai
 from dotenv import load_dotenv
 
-from models import Dialogue
+from models import Transcript
 
 load_dotenv()
 
@@ -25,13 +25,13 @@ model = genai.GenerativeModel(
   # See https://ai.google.dev/gemini-api/docs/safety-settings
 )
 
-def generate(transcript: str, dialogues: list[Dialogue]):
-    dialogues_str = "\n".join(map(lambda dialogue: str(dialogue), dialogues))
+def generate(transcripts: list[Transcript]):
+    transcripts_str = "\n".join(map(lambda transcript: str(transcript), transcripts))
 
     response = model.generate_content(
         "You are a Smart Sales Helper integrated within a Customer Relationship Management system\n" +
         "Your task is to help a salesperson by generating narrative recommendations using based on the context and previous answers.\n" +
-        f"Transcript: {transcript}\n{dialogues_str}"
+        f"Transcript:\n{transcripts_str}"
     )
 
     return response.text
