@@ -11,7 +11,7 @@ def get_chat_history(chat_id: int) -> List[str]:
         "container_id_type":"chat",
         "container_id": chat_id,
         "sort_type": "ByCreateTimeDesc",
-        "page_size": 10
+        "page_size": 20
     }
     
     headers = {
