@@ -1,8 +1,9 @@
 import os
+from typing import List
 import google.generativeai as genai
 from dotenv import load_dotenv
 
-from ..models import Transcript
+from models import Transcript
 
 load_dotenv()
 
@@ -14,7 +15,7 @@ generation_config = {
   "temperature": 1,
   "top_p": 0.95,
   "top_k": 64,
-  "max_output_tokens": 256,
+  "max_output_tokens": 512,
   "response_mime_type": "text/plain",
 }
 
@@ -31,26 +32,28 @@ def generate(transcripts: list[Transcript]):
     response = model.generate_content(
         "You are a Smart Sales Helper integrated within a Customer Relationship Management system\n" +
         "Your task is to help a salesperson by generating narrative recommendations using based on the context and previous answers.\n" +
-        f"Transcript:\n{transcripts_str}\n" +
         "Your response should meet the following requirements : " +
         "1. No bolded words. " +
         "2. Headers to be numbered and limited to 3. " +
         "3. Sub-pointers should be in bullet form. " +
-        "4. Sub-pointers should not be bolded."
+        "4. Sub-pointers should not be bolded." +
+        "5. May only use up to 350 characters." +
+        f"\nTranscript:\n{transcripts_str}"
     )
 
     processed_text = response.text.replace("**", "").replace("*", "-")
 
     return processed_text
 
-def generate_reply(user_input: str):
+def generate_reply(user_input: str, chat_history: List[str] = []):
     response = model.generate_content(
         "You are a Smart Sales Helper integrated within a Customer Relationship Management system\n" +
-        "Your task is to assist a salesperson based on his input\n" +
-        f"Input:\n{user_input}\n" +
+        "Your task is to assist a salesperson based on his input and chat history\n" +
         "Your response should meet the following requirements : " +
         "1. It should be concise. " +
-        "2. Headers to be numbered and limited to 3. "
+        "2. May only use up to 500 characters." +
+        f"\nChat History:\n{"\n".join(chat_history)}" +
+        f"\nInput:\n{user_input}"
     )
 
     processed_text = response.text.replace("**", "").replace("*", "-")

@@ -45,3 +45,5 @@ def retrieve_lark_token_callback():
         return token.lark_token if token else ""
     
     return helper
+
+retrieve_lark_token = retrieve_lark_token_callback()

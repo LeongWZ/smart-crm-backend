@@ -2,10 +2,11 @@ import os
 from fastapi import FastAPI, HTTPException, Request
 from dotenv import load_dotenv
 from pydantic import ValidationError
-from .gemini.generate import generate, generate_reply
+from gemini.generate import generate, generate_reply
 
-from .models import LarkRequest, Prompt
-from .lark.send_message import reply_message, send_message
+from models import LarkRequest, Prompt
+from lark.send_message import reply_message, send_message
+from lark.get_chat_history import get_chat_history
 
 # Uncomment the following lines to connect to ngrok for development purposes
 # from connect_to_ngrok import connect_to_ngrok
@@ -41,13 +42,15 @@ async def lark(request: Request):
         lark_request: LarkRequest = LarkRequest.model_validate(body)
         message = lark_request.event.message
         if (message.message_type == "text"):
-            generated_response = generate_reply(message.content)
+            chat_history = get_chat_history(message.chat_id)
+            generated_reply = generate_reply(message.content, chat_history)
             reply_message(
                 lark_request.event.message.message_id,
-                generated_response
+                generated_reply
             )
-    except ValidationError:
+    except ValidationError as e: 
         pass
+
     return { "challenge": body.get("challenge") }
 
 @app.post("/validate")

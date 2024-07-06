@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import List
 from pydantic import BaseModel
 
 
@@ -55,3 +55,35 @@ class LarkRequest(BaseModel):
     schema: str
     header: Header
     event: Event
+
+class LarkChatHistory(BaseModel):
+
+    class Data(BaseModel):
+
+        class Item(BaseModel):
+            class Sender(BaseModel):
+                id: str
+                id_type: str
+                sender_type: str
+                tenant_key: str
+
+            class Body(BaseModel):
+                content: str
+
+            body: Body
+            chat_id: str
+            create_time: str
+            deleted: bool
+            message_id: str
+            msg_type: str
+            sender: Sender
+            update_time: str
+            updated: bool
+
+        has_more: bool
+        items: List[Item]
+        page_token: str
+
+    code: int
+    data: Data
+    msg: str

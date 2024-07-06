@@ -1,9 +1,7 @@
 import requests
 import json
 
-from .retrieve_lark_token import retrieve_lark_token_callback
-
-retrieve_lark_token = retrieve_lark_token_callback()
+from retrieve_lark_token import retrieve_lark_token
 
 def send_message(email: str, message: str) -> bool:
     url = "https://open.larksuite.com/open-apis/im/v1/messages/"
