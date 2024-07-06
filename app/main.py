@@ -2,10 +2,10 @@ import os
 from fastapi import FastAPI, HTTPException, Request
 from dotenv import load_dotenv
 from pydantic import ValidationError
-from gemini.generate import generate, generate_reply
+from .gemini.generate import generate, generate_reply
 
-from models import LarkRequest, Prompt
-from lark.send_message import reply_message, send_message
+from .models import LarkRequest, Prompt
+from .lark.send_message import reply_message, send_message
 
 # Uncomment the following lines to connect to ngrok for development purposes
 # from connect_to_ngrok import connect_to_ngrok

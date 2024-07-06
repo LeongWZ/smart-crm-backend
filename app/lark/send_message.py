@@ -1,6 +1,7 @@
 import requests
-from .retrieve_lark_token import retrieve_lark_token_callback
 import json
+
+from .retrieve_lark_token import retrieve_lark_token_callback
 
 retrieve_lark_token = retrieve_lark_token_callback()
 

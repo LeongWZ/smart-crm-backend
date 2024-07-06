@@ -2,7 +2,7 @@ import os
 import google.generativeai as genai
 from dotenv import load_dotenv
 
-from models import Transcript
+from ..models import Transcript
 
 load_dotenv()
 
