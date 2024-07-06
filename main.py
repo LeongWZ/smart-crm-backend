@@ -9,8 +9,8 @@ from lark.send_message import reply_message, send_message
 from lark.get_chat_history import get_chat_history
 
 # Uncomment the following lines to connect to ngrok for development purposes
-# from connect_to_ngrok import connect_to_ngrok
-# connect_to_ngrok()
+#from connect_to_ngrok import connect_to_ngrok
+#connect_to_ngrok()
 
 load_dotenv()
 

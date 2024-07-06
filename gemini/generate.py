@@ -50,8 +50,7 @@ def generate_reply(user_input: str, chat_history: List[str] = []):
         "You are a Smart Sales Helper integrated within a Customer Relationship Management system\n" +
         "Your task is to assist a salesperson based on his input and chat history\n" +
         "Your response should meet the following requirements : " +
-        "1. It should be concise. " +
-        "2. May only use up to 500 characters." +
+        "1. May only use up to 500 characters." +
         f"\nChat History:\n{"\n".join(chat_history)}" +
         f"\nInput:\n{user_input}"
     )
