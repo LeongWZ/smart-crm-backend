@@ -7,11 +7,11 @@ from gemini.generate import generate, generate_reply
 from models import LarkRequest, Prompt
 from lark.send_message import reply_message, send_message
 
-from connect_to_ngrok import connect_to_ngrok
+# Uncomment the following lines to connect to ngrok for development purposes
+# from connect_to_ngrok import connect_to_ngrok
+# connect_to_ngrok()
 
 load_dotenv()
-
-connect_to_ngrok()
 
 app = FastAPI()
 
