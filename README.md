@@ -16,9 +16,11 @@ API documentation can be found on <https://smart-crm-backend-iodqf.ondigitalocea
 ## Run
 
 To run in developement mode, run:
-        
-        fastapi dev main.py
+```bash
+fastapi dev main.py
+```
 
 For production use, run:
-
-        fastapi run
+```bash
+fastapi run
+```
