@@ -41,7 +41,7 @@ async def lark(request: Request):
     try:
         lark_request: LarkRequest = LarkRequest.model_validate(body)
         message = lark_request.event.message
-        if (message.message_type == "text"):
+        if (lark_request.header.event_type == "im.message.receive_v1" and message.message_type == "text"):
             chat_history = get_chat_history(message.chat_id)
             generated_reply = generate_reply(message.content, chat_history)
             reply_message(
