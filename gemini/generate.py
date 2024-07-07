@@ -32,13 +32,13 @@ def generate(transcripts: list[Transcript]):
     response = model.generate_content(
         "You are a Smart Sales Helper integrated within a Customer Relationship Management system\n" +
         "Your task is to help a salesperson by generating narrative recommendations using based on the context and previous answers.\n" +
+        f"Transcript:\n{transcripts_str}\n" +
         "Your response should meet the following requirements : " +
         "1. No bolded words. " +
         "2. Headers to be numbered and limited to 3. " +
         "3. Sub-pointers should be in bullet form. " +
         "4. Sub-pointers should not be bolded." +
-        "5. May only use up to 350 characters." +
-        f"\nTranscript:\n{transcripts_str}"
+        "5. May only use up to 350 characters."
     )
 
     processed_text = response.text.replace("**", "").replace("*", "-")
@@ -49,10 +49,10 @@ def generate_reply(user_input: str, chat_history: List[str] = []):
     response = model.generate_content(
         "You are a Smart Sales Helper integrated within a Customer Relationship Management system\n" +
         "Your task is to assist a salesperson based on his input and chat history\n" +
+        f"Chat History:\n{"\n".join(chat_history)}\n" +
+        f"Input:\n{user_input}\n" +
         "Your response should meet the following requirements : " +
-        "1. May only use up to 500 characters." +
-        f"\nChat History:\n{"\n".join(chat_history)}" +
-        f"\nInput:\n{user_input}"
+        "1. May only use up to 500 characters."
     )
 
     processed_text = response.text.replace("**", "").replace("*", "-")

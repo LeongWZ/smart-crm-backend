@@ -1,6 +1,6 @@
 # smart-crm-backend
 
-Backend for smart-crm. Deployment can be found on <https://smart-crm-backend-iodqf.ondigitalocean.app>
+Backend for [smart-crm](https://github.com/LeongWZ/smart-crm). Deployment can be found on <https://smart-crm-backend-iodqf.ondigitalocean.app>
 
 ## API Documentation
 API documentation can be found on <https://smart-crm-backend-iodqf.ondigitalocean.app/docs>
