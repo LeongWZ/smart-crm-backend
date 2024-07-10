@@ -1,3 +1,4 @@
+import json
 from typing import List
 from pydantic import ValidationError
 import requests
@@ -36,5 +37,5 @@ def get_chat_history(chat_id: str) -> List[str]:
 def item_to_string(item: LarkChatHistory.Data.Item):
     if item.deleted:
         return f"Deleted message"
-    
-    return f"{item.sender.sender_type}: {item.body.content}"
+    content: dict = json.loads(item.body.content)
+    return f"{item.sender.sender_type}: {content.get("text", "Empty message")}"

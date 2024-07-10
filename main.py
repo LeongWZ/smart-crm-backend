@@ -1,3 +1,4 @@
+import json
 import os
 from fastapi import FastAPI, HTTPException, Request
 from dotenv import load_dotenv
@@ -43,7 +44,8 @@ async def lark(request: Request):
         message = lark_request.event.message
         if (lark_request.header.event_type == "im.message.receive_v1" and message.message_type == "text"):
             chat_history = get_chat_history(message.chat_id)
-            generated_reply = generate_reply(message.content, chat_history)
+            content: dict = json.loads(message.content)
+            generated_reply = generate_reply(content.get("text", "Empty message"), chat_history)
             reply_message(
                 lark_request.event.message.message_id,
                 generated_reply
