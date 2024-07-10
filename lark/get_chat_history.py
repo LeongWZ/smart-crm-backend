@@ -5,7 +5,7 @@ import requests
 from retrieve_lark_token import retrieve_lark_token
 from models import LarkChatHistory
 
-def get_chat_history(chat_id: int) -> List[str]:
+def get_chat_history(chat_id: str) -> List[str]:
     url = f"https://open.larksuite.com/open-apis/im/v1/messages"
     params = {
         "container_id_type":"chat",
@@ -27,8 +27,14 @@ def get_chat_history(chat_id: int) -> List[str]:
         
         chat_history = LarkChatHistory.model_validate(result)
 
-        return list(map(lambda item: item.body.content, chat_history.data.items))
+        return list(map(item_to_string, chat_history.data.items[::-1]))
     except requests.exceptions.JSONDecodeError:
         return []
     except ValidationError as e:
         return []
+    
+def item_to_string(item: LarkChatHistory.Data.Item):
+    if item.deleted:
+        return f"Deleted message"
+    
+    return f"{item.sender.sender_type}: {item.body.content}"

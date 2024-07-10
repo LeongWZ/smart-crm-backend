@@ -49,7 +49,7 @@ def generate_reply(user_input: str, chat_history: List[str] = []):
     response = model.generate_content(
         "You are a Smart Sales Helper integrated within a Customer Relationship Management system\n" +
         "Your task is to assist a salesperson based on his input and chat history\n" +
-        f"Chat History:\n{"\n".join(chat_history)}\n" +
+        f"Chat History: {"\n".join(chat_history)}" +
         f"Input:\n{user_input}\n" +
         "Your response should meet the following requirements : " +
         "1. May only use up to 500 characters."
