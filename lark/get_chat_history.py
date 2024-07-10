@@ -33,9 +33,3 @@ def get_chat_history(chat_id: str) -> List[LarkMessage]:
         return []
     except ValidationError as e:
         return []
-    
-def item_to_string(item: LarkMessage):
-    if item.deleted:
-        return f"Deleted message"
-    content: dict = json.loads(item.body.content)
-    return f"{item.sender.sender_type}: {content.get("text", "Empty message")}"

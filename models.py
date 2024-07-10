@@ -1,3 +1,4 @@
+import json
 from typing import List
 from pydantic import BaseModel
 
@@ -39,12 +40,12 @@ class LarkMessage(BaseModel):
     sender: Sender
     update_time: str
     updated: bool
-
+    
     def __str__(self):
         if self.deleted:
             return f"Deleted message"
-        
-        return f"{self.sender.sender_type}: {self.body.content}"
+        content: dict = json.loads(self.body.content)
+        return f"{self.sender.sender_type}: {content.get("text", "Empty message")}"
 
 class LarkRequest(BaseModel):
     class Header(BaseModel):
