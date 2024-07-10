@@ -34,7 +34,7 @@ async def POST(prompt: Prompt, api_key: str = ""):
             prompt.transcripts[-2:]
         ))
     )
-
+    
     generated_response = generate(prompt.transcripts)
 
     if not sent_transcript or not reply_message(sent_transcript.message_id, generated_response):
@@ -73,3 +73,7 @@ async def validate(email: str = "", api_key: str = ""):
                             "Please provide the email you had registered with your Lark account")
     
     return { "message": "Succesfully connected to smart-crm" }
+
+
+def get_latest_transcript(transcripts: list):
+    return transcripts[-1].content if transcripts else ""

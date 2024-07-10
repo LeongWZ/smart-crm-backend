@@ -40,6 +40,12 @@ class LarkMessage(BaseModel):
     update_time: str
     updated: bool
 
+    def __str__(self):
+        if self.deleted:
+            return f"Deleted message"
+        
+        return f"{self.sender.sender_type}: {self.body.content}"
+
 class LarkRequest(BaseModel):
     class Header(BaseModel):
         event_id: str

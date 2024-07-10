@@ -1,4 +1,5 @@
 from typing import Optional
+from pydantic import ValidationError
 import requests
 import json
 
@@ -25,8 +26,10 @@ def send_message(email: str, message: str) -> Optional[LarkMessage]:
     response = requests.request("POST", url, params=params, headers=headers, data=payload)
     try:
         result: dict = response.json()
-        return result.get("data")
+        return LarkMessage.model_validate(result.get("data"))
     except requests.exceptions.JSONDecodeError:
+        return None
+    except ValidationError: 
         return None
 
 def reply_message(message_id: str, message: str) -> Optional[LarkMessage]:
@@ -47,6 +50,8 @@ def reply_message(message_id: str, message: str) -> Optional[LarkMessage]:
     response = requests.request("POST", url, headers=headers, data=payload)
     try:
         result: dict = response.json()
-        return result.get("data")
+        return LarkMessage.model_validate(result.get("data"))
     except requests.exceptions.JSONDecodeError:
+        return None
+    except ValidationError: 
         return None

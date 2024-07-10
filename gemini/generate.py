@@ -3,7 +3,7 @@ from typing import List
 import google.generativeai as genai
 from dotenv import load_dotenv
 
-from models import Transcript
+from models import LarkMessage, Transcript
 
 load_dotenv()
 
@@ -45,11 +45,11 @@ def generate(transcripts: list[Transcript]):
 
     return processed_text
 
-def generate_reply(user_input: str, chat_history: List[str] = []):
+def generate_reply(user_input: str, chat_history: List[LarkMessage] = []):
     response = model.generate_content(
         "You are a Smart Sales Helper integrated within a Customer Relationship Management system\n" +
         "Your task is to assist a salesperson based on his input and chat history\n" +
-        f"Chat History: {"\n".join(chat_history)}" +
+        f"Chat History: {"\n".join(map(str, chat_history))}" +
         f"Input:\n{user_input}\n" +
         "Your response should meet the following requirements : " +
         "1. May only use up to 500 characters."
