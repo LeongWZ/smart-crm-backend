@@ -1,9 +1,11 @@
+from typing import Optional
 import requests
 import json
 
+from models import LarkMessage
 from retrieve_lark_token import retrieve_lark_token
 
-def send_message(email: str, message: str) -> bool:
+def send_message(email: str, message: str) -> Optional[LarkMessage]:
     url = "https://open.larksuite.com/open-apis/im/v1/messages/"
     params = {"receive_id_type":"email"}
     
@@ -22,13 +24,12 @@ def send_message(email: str, message: str) -> bool:
     }
     response = requests.request("POST", url, params=params, headers=headers, data=payload)
     try:
-        result = response.json()
-        response_code = result.get("code")
-        return response_code == 0
+        result: dict = response.json()
+        return result.get("data")
     except requests.exceptions.JSONDecodeError:
-        return False
+        return None
 
-def reply_message(message_id: int, message: str) -> bool:
+def reply_message(message_id: str, message: str) -> Optional[LarkMessage]:
     url = f"https://open.larksuite.com/open-apis/im/v1/messages/{message_id}/reply"
     
     msgContent = {
@@ -45,8 +46,7 @@ def reply_message(message_id: int, message: str) -> bool:
     }
     response = requests.request("POST", url, headers=headers, data=payload)
     try:
-        result = response.json()
-        response_code = result.get("code")
-        return response_code == 0
+        result: dict = response.json()
+        return result.get("data")
     except requests.exceptions.JSONDecodeError:
-        return False
+        return None

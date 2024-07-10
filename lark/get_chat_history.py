@@ -4,7 +4,7 @@ from pydantic import ValidationError
 import requests
 
 from retrieve_lark_token import retrieve_lark_token
-from models import LarkChatHistory
+from models import LarkChatHistory, LarkMessage
 
 def get_chat_history(chat_id: str) -> List[str]:
     url = f"https://open.larksuite.com/open-apis/im/v1/messages"
@@ -34,7 +34,7 @@ def get_chat_history(chat_id: str) -> List[str]:
     except ValidationError as e:
         return []
     
-def item_to_string(item: LarkChatHistory.Data.Item):
+def item_to_string(item: LarkMessage):
     if item.deleted:
         return f"Deleted message"
     content: dict = json.loads(item.body.content)

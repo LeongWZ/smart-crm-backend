@@ -27,9 +27,17 @@ async def POST(prompt: Prompt, api_key: str = ""):
     if api_key != os.getenv('BACKEND_API_KEY'):
         raise HTTPException(status_code=401, detail="Unauthorized: invalid API key.")
     
+    sent_transcript = send_message(
+        prompt.email,
+        "\n".join(map(
+            lambda transcript: f"Speaker {transcript.speakerTag}: {transcript.content}",
+            prompt.transcripts[-2:]
+        ))
+    )
+
     generated_response = generate(prompt.transcripts)
 
-    if not send_message(prompt.email, generated_response):
+    if not sent_transcript or not reply_message(sent_transcript.message_id, generated_response):
         raise HTTPException(status_code=404, detail="Failed to send message to lark. " + 
                             "Please provide the email you had registered with your Lark account")
     
